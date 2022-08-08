@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  server:
+    restart: 'on-failure'
+    build:
+      context: './back'
+      dockerfile: Dockerfile
+    container_name: 'server-sonsangnim'
+    ports:
+      - 5000:5000
+
+  ai_server:
+    restart: 'on-failure'
+    build:
+      context: './AI'
+      dockerfile: Dockerfile
+    container_name: 'flask-sonsangnim'
+    ports:
+      - 5005:5005
+    links:
+      - server
+
