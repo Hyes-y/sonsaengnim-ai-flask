@@ -1,5 +1,4 @@
 import numpy as np
-from scipy.stats import rankdata
 from collections import Counter
 
 
@@ -10,12 +9,17 @@ def top_n(array, n=3):
     :param array:
     :return top_n_idx:
     """
-    ranks = rankdata(array)
-    top_n_idx = []
+    array = np.array(array)
+    temp = np.argsort(-array)
+    ranks = temp.argsort()
+
+    top_n_idx = [0] * n
     length = len(array)
-    for i in range(length, length-n, -1):
-        top_n_idx.append(np.where(ranks == i)[0][0])
+    for i in range(length):
+        if ranks[i] < n:
+            top_n_idx[ranks[i]] = array[i]
     return top_n_idx
+
 
 
 def get_top_n_frequency(array, n=3):
